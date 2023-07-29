@@ -1,19 +1,22 @@
 import blue from "@atproto/api";
-import fs from "node:fs";
+// import fs from "node:fs";
+import getRandomJoke from "./data_from_api.js";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const { BskyAgent } = blue;
 
-const BLUESKY_BOT_USERNAME = "<username>";
-const BLUESKY_BOT_PASSWORD = "<bot-password>";
+const BLUESKY_BOT_USERNAME = process.env.BLUESKY_BOT_USERNAME;
+const BLUESKY_BOT_PASSWORD = process.env.BLUESKY_BOT_PASSWORD;
 
 const fileName = "./post.json";
 
 const generateFunnyCatQuote = async () => {
-  const file = fs.readFileSync(fileName);
-  const fileContent = JSON.parse(file);
-  console.log(fileContent);
+  const joke = await getRandomJoke();
+  const fileContent = { body: `Time for Joke: \n- ${joke.setup} \n- ${joke.punchline}` }
 
-  //now that we have the post, lets post it to bluesky
+  // Post using the joke
   const { RichText } = blue;
   const agent = new BskyAgent({ service: "https://bsky.social/" });
   await agent.login({
