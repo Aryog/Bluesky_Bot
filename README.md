@@ -2,7 +2,7 @@
 
 ### Steps to run the project with docker
 1. Clone the github repository
-2. `cd bluesky-social-bot`
+2. `cd Bluesky_Bot`
 3. `cp .env.example .env`
 
 > This should create the .env file
